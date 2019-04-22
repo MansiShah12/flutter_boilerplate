@@ -4,7 +4,7 @@ import './BottomTabScreens/profile_screen.dart';
 import './BottomTabScreens/setting_screen.dart';
 import './BottomTabScreens/browse_screen.dart';
 import '../TabBarNavigation/index.dart';
-import '../DrawerBar/index.dart';
+import '../../DrawerBar/index.dart';
 
 class BottomTab extends StatefulWidget {
   @override

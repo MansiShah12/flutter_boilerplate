@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../BottomTabNavigation/index.dart';
+import '../Navigators/BottomTabNavigation/index.dart';
 import '../../utility/ validation.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -65,7 +65,9 @@ class _LoginView extends State<LoginView> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
   Widget build(BuildContext context) {
     final loginText =
-        Text('Login', style: TextStyle(color: Colors.blue, fontSize: 50));
+        Text('Welcome to Flutter. Please login to continue.', 
+        textAlign: TextAlign.center,
+        style: TextStyle(color: Colors.blue, fontSize: 30,));
     final errorText =
         Text('$error', style: TextStyle(color: Colors.red, fontSize: 20));
 

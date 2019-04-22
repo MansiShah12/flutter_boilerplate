@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../repository/beer_repository.dart';
-import '../../../models/beer.dart';
-import '../../../widgets/beerTile.dart';
+import '../../../../services/beerService.dart';
+import '../../../../models/beer.dart';
+import '../../../../widgets/beerTile.dart';
 
 class First extends StatelessWidget {
   @override

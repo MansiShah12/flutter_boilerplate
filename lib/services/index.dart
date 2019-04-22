@@ -2,14 +2,14 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../models/beer.dart';
+import '../utility/constants.dart';
 
 
-Future<Stream<Beer>> getBeers() async {
- final String url = 'https://api.punkapi.com/v2/beers';
-
+Future<Stream<Beer>> fetchData(method,params) async {
+final String url = '$BASE_URL$params';
  final client = new http.Client();
  final streamedRest = await client.send(
-   http.Request('get', Uri.parse(url))
+   http.Request(method, Uri.parse(url))
  );
 print("streamedReststreamedRestttttt: $streamedRest");
  return streamedRest.stream
