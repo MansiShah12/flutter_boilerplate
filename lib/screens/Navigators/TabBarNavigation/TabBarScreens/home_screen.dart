@@ -39,21 +39,21 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) => Scaffold(
           body: Center(
         child: Column(
-         children: <Widget>[
+          children: <Widget>[
             new SizedBox(
-            child : new Container(
-               width: MediaQuery.of(context).size.width,
-              decoration: new BoxDecoration(color: Colors.brown),
-          child:Center(
-          child: Padding(
-             padding: const EdgeInsets.all(8.0),
-         child : new Text(
-              'BEERS',
-              style: TextStyle(fontSize: 20,),
-            ),
-          )
-          )
-            ),
+              child: new Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: new BoxDecoration(color: Colors.brown),
+                  child: Center(
+                      child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: new Text(
+                      'BEERS',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                  ))),
             ),
             SizedBox(height: 20),
             Expanded(
@@ -68,6 +68,4 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ));
-
-
 }

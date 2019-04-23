@@ -1,6 +1,6 @@
 
 class Beer {
-    final int id;
+  final int id;
   final String name;
   final String tagline;
   final String description;
