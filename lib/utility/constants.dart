@@ -1,1 +1,0 @@
-final String BASE_URL = 'https://api.punkapi.com/';
