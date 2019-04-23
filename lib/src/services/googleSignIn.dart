@@ -9,8 +9,6 @@ GoogleSignIn _googleSignIn = GoogleSignIn(
 );
 
 class GoogleSigning{
-   
-  
  static Future<String> signInWithGoogle() async {
    final FirebaseAuth _fAuth = FirebaseAuth.instance;
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
