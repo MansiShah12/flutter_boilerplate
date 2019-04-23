@@ -4,13 +4,14 @@ import '../../utility/ validation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../widgets/google_signIn_button.dart';
+import '../../widgets/facebook_signIn_button.dart';
+
 GoogleSignIn _googleSignIn = GoogleSignIn(
   scopes: [
     'email',
     'https://www.googleapis.com/auth/contacts.readonly',
   ],
 );
-
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -213,7 +214,11 @@ class _LoginView extends State<LoginView> {
                   SizedBox(
                     height: 35.0,
                   ),
-                  GoogleSignInButton(),
+                  GoogleSigninButton(),
+                  SizedBox(
+                    height: 35.0,
+                  ),
+                  FacebookSigninButton(),
                   SizedBox(
                     height: 15.0,
                   ),
