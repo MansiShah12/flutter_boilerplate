@@ -9,7 +9,7 @@ GoogleSignIn _googleSignIn = GoogleSignIn(
 );
 
 class GoogleSigning{
- static Future<String> signInWithGoogle() async {
+ static Future<bool> signInWithGoogle() async {
    final FirebaseAuth _fAuth = FirebaseAuth.instance;
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     print("googleUsergoogleUsergoogleUser: $googleUser");
@@ -33,7 +33,7 @@ class GoogleSigning{
     final FirebaseUser currentUser = await _fAuth.currentUser();
     assert(user.uid == currentUser.uid);
 
-    return 'signInWithGoogle succeeded: $user';
+    return (user.uid == currentUser.uid);
   }
 
 }
