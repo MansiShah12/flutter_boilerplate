@@ -1,0 +1,35 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "2AEBEEFA5FC3A47437E3F85055B4148C359F900E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "2AEBEEFA5FC3A47437E3F85055B4148C359F900E" : 9223372036854775807,
+    "B9BC852104FA5F3F91D8B12EB80D37232CB3B40D" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "C82E7A89-D002-4B17-84B2-4BD18C91D4E9",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "2AEBEEFA5FC3A47437E3F85055B4148C359F900E" : "flutter_boilerplate\/",
+    "B9BC852104FA5F3F91D8B12EB80D37232CB3B40D" : "..\/.config\/yarn\/global\/node_modules\/flutter-cli\/flutter"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Runner",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ios\/Runner.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/MansiShah12\/flutter_boilerplate.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2AEBEEFA5FC3A47437E3F85055B4148C359F900E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/flutter\/flutter.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B9BC852104FA5F3F91D8B12EB80D37232CB3B40D"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/flutter\/flutter.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B9BC852104FA5F3F91D8B12EB80D37232CB3B40D"
+    }
+  ]
+}

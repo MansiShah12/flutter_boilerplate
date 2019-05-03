@@ -16,7 +16,7 @@ class TabBarScreen extends StatelessWidget {
               child: TabBar(
                 tabs: [
                   Tab(icon: Icon(Icons.local_bar)),
-                  Tab(icon: Icon(Icons.fastfood)),
+                  //Tab(icon: Icon(Icons.fastfood)),
                   Tab(icon: Icon(Icons.map))
                 ],
               ),
@@ -25,7 +25,8 @@ class TabBarScreen extends StatelessWidget {
           body: TabBarView(
             children: [
               First(),
-              MapScreen(Colors.greenAccent),
+              MyApp(),
+              //MapScreen(Colors.greenAccent),
             ],
           ),
         ),
