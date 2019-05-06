@@ -28,7 +28,8 @@ dependencies:
   # firebase_auth: ^0.8.4+5
   # flutter_facebook_login:
   google_maps_flutter: 0.5.7
-  flutter_auth_buttons: 
+  flutter_auth_buttons:
+  flutter_swiper : ^1.1.6
 
 dev_dependencies:
   flutter_test:
@@ -46,9 +47,8 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 assets: 
-- assets/flutter.png
-- assets/googleSignIn.png
-  # To add assets to your application, add an assets section, like this:
+- assets/
+# To add assets to your application, add an assets section, like this:
   # assets:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg

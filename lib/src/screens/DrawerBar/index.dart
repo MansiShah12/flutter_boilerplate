@@ -31,6 +31,8 @@ class DrawerBar extends StatelessWidget {
               decoration: BoxDecoration(color: Colors.blueAccent),
             ),
             _drawerList(context, 'My Profile', Icons.account_circle),
+            _drawerList(context, 'Images', Icons.image),
+            _drawerList(context, 'Map', Icons.map),
             _drawerList(context, 'Settings', Icons.settings),
             _drawerList(context, 'Logout', Icons.arrow_back),
           ],
