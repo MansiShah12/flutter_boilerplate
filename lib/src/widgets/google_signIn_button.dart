@@ -14,7 +14,24 @@ class GoogleSigninButton extends StatelessWidget {
               MaterialPageRoute(
                 builder: (BuildContext context) => BottomTab(),
               ));
-        }
+        }else{
+    showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: new Text("Log In Failed"),
+              actions: <Widget>[
+                new FlatButton(
+                  child: new Text("Ok"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            );
+          },
+        );
+  }
       },
       darkMode: true,
     );
