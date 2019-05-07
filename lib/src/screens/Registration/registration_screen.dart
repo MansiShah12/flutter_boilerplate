@@ -54,7 +54,7 @@ class _Registration extends State<Registration> {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (BuildContext context) => BottomTab(),
+              builder: (BuildContext context) => LoginScreen(),
             ));
         showDialog(
           context: context,
