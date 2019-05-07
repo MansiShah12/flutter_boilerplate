@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../widgets/google_signIn_button.dart';
 import '../../widgets/facebook_signIn_button.dart';
+import '../Registration/registration_screen.dart';
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
   scopes: [
@@ -177,7 +178,7 @@ class _LoginView extends State<LoginView> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (BuildContext context) => BottomTab(),
+                builder: (BuildContext context) => RegistrationScreen(),
               ));
         });
 
