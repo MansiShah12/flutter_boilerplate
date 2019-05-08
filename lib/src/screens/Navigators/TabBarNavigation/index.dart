@@ -26,7 +26,7 @@ class TabBarScreen extends StatelessWidget {
           body: TabBarView(
             children: [
               First(),
-              MapScreen(Colors.greenAccent),
+              Map(),
               ImageSwiper(),
             ],
           ),

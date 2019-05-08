@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-
-class MapScreen extends StatelessWidget {
- final Color color;
-
- MapScreen(this.color);
-
- @override
- Widget build(BuildContext context) {
-   return Container(
-     color: color,
-     child:Center(child: Text(
-       'MAP SCREEN',
-       style: TextStyle(fontSize: 30, color: Colors.white),
-     ),),
-   );
- }
+import '../../../Maps/maps.dart';
+class Map extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+      title: 'Flutter Demo',
+      theme: new ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: new Maps(),
+    );
+  }
 }
+
