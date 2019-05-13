@@ -4,6 +4,7 @@ import '../../utility/ validation.dart';
 import '../../widgets/google_signIn_button.dart';
 import '../../widgets/facebook_signIn_button.dart';
 import '../Registration/registration_screen.dart';
+import '../user_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -124,7 +125,7 @@ class _LoginView extends State<LoginView> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (BuildContext context) => RegistrationScreen(),
+                builder: (BuildContext context) => OwnerDetails(),
               ));
         });
 

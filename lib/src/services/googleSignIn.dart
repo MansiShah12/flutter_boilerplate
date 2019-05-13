@@ -1,5 +1,6 @@
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:convert';
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
   scopes: [
@@ -9,7 +10,7 @@ GoogleSignIn _googleSignIn = GoogleSignIn(
 );
 
 class GoogleSigning{
- static Future<bool> signInWithGoogle() async {
+ static Future<String> signInWithGoogle() async {
    final FirebaseAuth _fAuth = FirebaseAuth.instance;
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     print("googleUsergoogleUsergoogleUser: $googleUser");
@@ -32,8 +33,9 @@ class GoogleSigning{
 
     final FirebaseUser currentUser = await _fAuth.currentUser();
     assert(user.uid == currentUser.uid);
+    final email= user.email;
 
-    return (user.uid == currentUser.uid);
+return (email);
   }
 
 }

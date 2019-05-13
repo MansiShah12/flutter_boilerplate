@@ -1,40 +1,43 @@
 import 'package:flutter/material.dart';
-import '../services//googleSignIn.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
-import '../screens/Navigators/BottomTabNavigation/index.dart';
-class GoogleSigninButton extends StatelessWidget {
-  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+import 'package:flutter_boilerplate/src/actions/actions.dart';
+import 'package:flutter_boilerplate/src/models/app_state.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
+
+class GoogleSigninButton extends StatefulWidget {
+  @override
+  _GoogleSigninButton createState() => new _GoogleSigninButton();
+}
+
+class _GoogleSigninButton extends State<GoogleSigninButton> {
+  @override
   Widget build(BuildContext context) {
-    return GoogleSignInButton(
-      onPressed:  ()async {
-        var signed = await GoogleSigning.signInWithGoogle();
-        if(signed){
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => BottomTab(),
-              ));
-        }else{
-    showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              content: new Text("Log In Failed"),
-              actions: <Widget>[
-                new FlatButton(
-                  child: new Text("Ok"),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            );
-          },
-        );
-  }
-      },
-      darkMode: true,
-    );
+    return new StoreConnector<AppState, _ViewModel>(
+        converter: (store) => _ViewModel.fromStore(store),
+        builder: (BuildContext context, _ViewModel viewModel) {
+          return GoogleSignInButton(
+            onPressed: () {
+              print("in ViewModelllll");
+              viewModel.login();
+            },
+            darkMode: true,
+          );
+        });
   }
 }
 
+class _ViewModel {
+  final Function login;
+
+  _ViewModel({
+    this.login,
+  });
+
+  static _ViewModel fromStore(Store<AppState> store) {
+    return _ViewModel(login: () {
+      print("in Loginnnnnnnn,${store.state}");
+      store.dispatch(Login(login: null));
+    });
+  }
+}
