@@ -1,12 +1,12 @@
 import '../models/github_repo_result.dart';
-import '../models/owner_details_result.dart';
+import '../models/user_data_result.dart';
 import 'package:meta/meta.dart';
 
 class Login {
-  final String login;
+  final bool isLoading;
  
 Login({
-    @required this.login,
+    @required this.isLoading,
   });
 }
 
@@ -15,6 +15,23 @@ class LoginSuccessfull {
 
   LoginSuccessfull({
     @required this.email,
+  });
+}
+class UserLoading {
+  final bool isLoading;
+
+  UserLoading({
+    @required this.isLoading,
+  });
+}
+class LogOutUser {
+  final String email;
+  final bool loggedIn;
+
+
+  LogOutUser({
+    @required this.email,
+    @required this.loggedIn,
   });
 }
 

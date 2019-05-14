@@ -216,8 +216,7 @@ class _Registration extends State<Registration> {
               MaterialPageRoute(
                 builder: (BuildContext context) => BottomTab(),
               ));
-          //Navigator.of(context).pop();
-        });
+          });
 
     return Scaffold(
       body: SingleChildScrollView(

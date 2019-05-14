@@ -1,4 +1,4 @@
-import '../models/owner_details_state.dart';
+import '../models/user_data_state.dart';
 import '../models/repo_state.dart';
 import 'package:meta/meta.dart';
 

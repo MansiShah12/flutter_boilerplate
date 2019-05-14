@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_boilerplate/src/models/app_state.dart';
+import 'package:flutter_boilerplate/src/models/user_data_state.dart';
+import 'package:flutter_boilerplate/src/selectors/selectors.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import '../models/app_state.dart';
-import '../models/owner_details_result.dart';
-import '../models/owner_details_state.dart';
-import '../selectors/selectors.dart';
 import 'package:redux/redux.dart';
 
 class OwnerDetails extends StatelessWidget {
@@ -32,7 +31,18 @@ class OwnerDetails extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text( data),
+        Text("Hello, $data",
+        textAlign: TextAlign.center,
+            style:TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20,)),
+                Text("Name: Mansi Shah",
+        textAlign: TextAlign.center,
+            style:TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20)),
+                Text("Phone Number: 1234567890" ,
+        textAlign: TextAlign.center,
+            style:TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20))
       ],
     );
   }

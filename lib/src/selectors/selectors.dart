@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
 import '../models/app_state.dart';
-import '../models/owner_details_state.dart';
+import '../models/user_data_state.dart';
 import '../models/repo_state.dart';
 
 RepoState repoStateSelector(AppState state) => state.repoState;
