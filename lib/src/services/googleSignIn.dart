@@ -1,6 +1,11 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_boilerplate/src/screens/Navigators/BottomTabNavigation/index.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:path/path.dart';
 import 'dart:convert';
+import 'package:sentry/sentry.dart';
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
   scopes: [
@@ -9,9 +14,13 @@ GoogleSignIn _googleSignIn = GoogleSignIn(
   ],
 );
 
+final SentryClient _sentry = SentryClient(dsn: "https://5e647fda8f8e48dbbc0ede657a333448:eb4a78f5156740979a60641f6346f475@sentry.io/1458864");
+
 class GoogleSigning{
  static Future<String> signInWithGoogle() async {
-   final FirebaseAuth _fAuth = FirebaseAuth.instance;
+
+try {
+    final FirebaseAuth _fAuth = FirebaseAuth.instance;
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     print("googleUsergoogleUsergoogleUser: $googleUser");
     final GoogleSignInAuthentication googleAuth =
@@ -36,6 +45,15 @@ class GoogleSigning{
     final email= user.email;
 
 return (email);
+  } catch(error, stackTrace) {
+    _sentry.captureException(
+      exception: error,
+      stackTrace: stackTrace,
+    );
+    var email='';
+    return (email);
+  }
+  
   }
 
 }

@@ -4,9 +4,11 @@ import 'package:meta/meta.dart';
 
 class Login {
   final bool isLoading;
+  final context;
  
 Login({
-    @required this.isLoading,
+    @required this.isLoading, 
+    @required this.context,
   });
 }
 

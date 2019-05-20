@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_boilerplate/src/actions/actions.dart';
+import 'package:flutter_boilerplate/src/models/app_state.dart';
+import 'package:flutter_boilerplate/src/models/user_data_state.dart';
+import 'package:flutter_boilerplate/src/selectors/selectors.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 import '../Navigators/BottomTabNavigation/index.dart';
 import '../../utility/ validation.dart';
 import '../../widgets/google_signIn_button.dart';
@@ -127,7 +133,9 @@ class _LoginView extends State<LoginView> {
                 builder: (BuildContext context) => RegistrationScreen(),
               ));
         });
-
+return new StoreConnector<AppState, _ViewModel>(
+        converter: (store) => _ViewModel.fromStore(store),
+        builder: (BuildContext context, _ViewModel viewModel) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Center(
@@ -177,8 +185,27 @@ class _LoginView extends State<LoginView> {
         ),
       ),
     );
+        }
+);
   }
 }
+
+class _ViewModel {
+  final Function login;
+  final UserDataState userdata;
+
+  _ViewModel({
+    this.login,
+     @required this.userdata,
+  });
+
+  static _ViewModel fromStore(Store<AppState> store) {
+    return _ViewModel(login: () {
+      store.dispatch(Login(isLoading: true));
+      },
+      userdata: userDataStateSelector(store.state));
+   }
+  }
 
 TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 OutlineInputBorder borderStyle =

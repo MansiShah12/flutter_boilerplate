@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_boilerplate/src/models/app_state.dart';
 import 'package:flutter_boilerplate/src/screens/LoginScreen/login_screen.dart';
+import 'package:flutter_boilerplate/src/screens/Navigators/BottomTabNavigation/index.dart';
 import 'package:flutter_boilerplate/src/store/store.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
@@ -32,7 +33,7 @@ class ReduxApp extends StatelessWidget {
           '/': (BuildContext context) {
             return LoginScreen();
           }
-        },
+        }
       ),
     );
   }

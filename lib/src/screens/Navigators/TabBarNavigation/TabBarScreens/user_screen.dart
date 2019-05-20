@@ -35,14 +35,6 @@ class OwnerDetails extends StatelessWidget {
         textAlign: TextAlign.center,
             style:TextStyle(
                 color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20,)),
-                Text("Name: Mansi Shah",
-        textAlign: TextAlign.center,
-            style:TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20)),
-                Text("Phone Number: 1234567890" ,
-        textAlign: TextAlign.center,
-            style:TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20))
       ],
     );
   }
