@@ -5,10 +5,12 @@ import 'package:meta/meta.dart';
 class Login {
   final bool isLoading;
   final context;
- 
-Login({
-    @required this.isLoading, 
+  final String signInMethod;
+
+  Login({
+    @required this.isLoading,
     @required this.context,
+    @required this.signInMethod,
   });
 }
 
@@ -19,6 +21,7 @@ class LoginSuccessfull {
     @required this.email,
   });
 }
+
 class UserLoading {
   final bool isLoading;
 
@@ -26,14 +29,13 @@ class UserLoading {
     @required this.isLoading,
   });
 }
+
 class LogOutUser {
   final String email;
   final bool loggedIn;
-
 
   LogOutUser({
     @required this.email,
     @required this.loggedIn,
   });
 }
-

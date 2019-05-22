@@ -3,7 +3,6 @@ import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:flutter_boilerplate/src/actions/actions.dart';
 import 'package:flutter_boilerplate/src/models/app_state.dart';
 import 'package:flutter_boilerplate/src/models/user_data_state.dart';
-import 'package:flutter_boilerplate/src/screens/Navigators/BottomTabNavigation/index.dart';
 import 'package:flutter_boilerplate/src/selectors/selectors.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
@@ -14,13 +13,11 @@ class GoogleSigninButton extends StatefulWidget {
 }
 
 class _GoogleSigninButton extends State<GoogleSigninButton> {
-  
-  onPressCalled (context, viewModel) {
+  onPressCalled(context, viewModel) {
     String email = viewModel.userdata.data;
-    viewModel.login(context);
-     
-    
+    viewModel.login(context, 'google');
   }
+
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(
@@ -29,7 +26,7 @@ class _GoogleSigninButton extends State<GoogleSigninButton> {
           return GoogleSignInButton(
             onPressed: () {
               onPressCalled(context, viewModel);
-              },
+            },
             darkMode: true,
           );
         });
@@ -42,13 +39,15 @@ class _ViewModel {
 
   _ViewModel({
     this.login,
-     @required this.userdata,
+    @required this.userdata,
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
-    return _ViewModel(login: (context) {
-        store.dispatch(Login(isLoading: true, context:context));
-      },
-      userdata: userDataStateSelector(store.state));
-   }
+    return _ViewModel(
+        login: (context, signInMethod) {
+          store.dispatch(Login(
+              isLoading: true, context: context, signInMethod: signInMethod));
+        },
+        userdata: userDataStateSelector(store.state));
   }
+}

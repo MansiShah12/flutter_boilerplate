@@ -1,38 +1,44 @@
 import 'package:flutter/material.dart';
-import '../services/facebookSignIn.dart';
+import 'package:flutter_boilerplate/src/actions/actions.dart';
+import 'package:flutter_boilerplate/src/models/app_state.dart';
+import 'package:flutter_boilerplate/src/models/user_data_state.dart';
+import 'package:flutter_boilerplate/src/selectors/selectors.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
-import '../screens/Navigators/BottomTabNavigation/index.dart';
 
 class FacebookSigninButton extends StatelessWidget {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+
+  onPressCalled (context, viewModel) {
+    viewModel.login(context, 'facebook');
+    }
+
   Widget build(BuildContext context) {
-    return FacebookSignInButton(onPressed:()async {
-  var status = await initiateFacebookLogin();
-  if(status == 'LoggedIn'){
-    Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => BottomTab(),
-              ));
-  }else{
-    showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              content: new Text("Log In Failed"),
-              actions: <Widget>[
-                new FlatButton(
-                  child: new Text("Ok"),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            );
-          },
-        );
-  }
-});
+    return new StoreConnector<AppState, _ViewModel>(
+        converter: (store) => _ViewModel.fromStore(store),
+        builder: (BuildContext context, _ViewModel viewModel) {
+          return FacebookSignInButton(onPressed: () async {
+            onPressCalled(context, viewModel);
+          });
+        });
   }
 }
 
+class _ViewModel {
+  final Function login;
+  final UserDataState userdata;
+
+  _ViewModel({
+    this.login,
+     @required this.userdata,
+  });
+
+  static _ViewModel fromStore(Store<AppState> store) {
+    return _ViewModel(login: (context,signInMethod) {
+      print("in Loginnnnn $signInMethod");
+        store.dispatch(Login(isLoading: true, context:context,signInMethod:signInMethod));
+      },
+      userdata: userDataStateSelector(store.state));
+   }
+  }
