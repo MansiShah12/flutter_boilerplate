@@ -1,15 +1,17 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_boilerplate/src/actions/actions.dart';
 import 'package:flutter_boilerplate/src/models/app_state.dart';
 import 'package:flutter_boilerplate/src/models/user_data_state.dart';
 import 'package:flutter_boilerplate/src/selectors/selectors.dart';
+import 'package:flutter_boilerplate/src/services/firebase_config.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import '../Navigators/BottomTabNavigation/index.dart';
-import '../../utility/ validation.dart';
+import '../../utility/validation.dart';
 import '../../widgets/google_signIn_button.dart';
 import '../../widgets/facebook_signIn_button.dart';
-import '../Registration/registration_screen.dart';
+import '../RegistrationScreen/registration_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -27,10 +29,53 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginView extends State<LoginView> {
-  
   String email = '', password = '', error = '';
   final myController = TextEditingController();
-  void _getData(context) {
+  final firebaseReference = FirebaseReference().databaseReference;
+
+  checkData(viewModel) async{
+    int flag = 0;
+    var db = firebaseReference.child("Users");
+    await db.once().then((DataSnapshot snapshot) {
+      Map<dynamic, dynamic> values = snapshot.value;
+      values.forEach((key, values) {
+        if (values["Email"] == email && values["Password"] == password) {
+          flag = 1;
+          print("valuesvalue $viewModel");
+         viewModel.loginSuccessfull(values["Email"]) ;
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: new Text("Successfully LoggedIn with"),
+                content: new Text("$email"),
+                actions: <Widget>[
+                  new FlatButton(
+                    child: new Text("Ok"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => BottomTab(),
+              ));
+        }
+      });
+    });
+    if (flag == 0) {
+      setState(() {
+        error = 'Email or password is incorrect';
+      });
+    }
+  }
+
+  void _getData(context,viewModel) {
     if (email == '' || password == '') {
       setState(() {
         error = 'Please Enter all Details';
@@ -40,28 +85,7 @@ class _LoginView extends State<LoginView> {
         error = '';
       });
       if (Validation.emailValidation(email)) {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (BuildContext context) => BottomTab(),
-            ));
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: new Text("Successfully LoggedIn"),
-              content: new Text("$email"),
-              actions: <Widget>[
-                new FlatButton(
-                  child: new Text("Ok"),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            );
-          },
-        );
+        checkData(viewModel);
       } else {
         setState(() {
           error = 'Invalid Email';
@@ -72,10 +96,12 @@ class _LoginView extends State<LoginView> {
 
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
   Widget build(BuildContext context) {
-    final loginText =
-        Text('Welcome to Flutter. Please login to continue.', 
+    final loginText = Text('Welcome to Flutter. Please login to continue.',
         textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.blue, fontSize: 30,));
+        style: TextStyle(
+          color: Colors.blue,
+          fontSize: 30,
+        ));
     final errorText =
         Text('$error', style: TextStyle(color: Colors.red, fontSize: 20));
 
@@ -93,6 +119,7 @@ class _LoginView extends State<LoginView> {
           hintText: "Email",
           border: borderStyle),
     );
+
     final passwordField = TextField(
       obscureText: true,
       style: style,
@@ -105,7 +132,8 @@ class _LoginView extends State<LoginView> {
           border: borderStyle),
     );
 
-    final loginButon = Material(
+    loginButton(viewModel){
+    return Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
       color: Color(0xff01A0C7),
@@ -113,7 +141,7 @@ class _LoginView extends State<LoginView> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
-          _getData(context);
+          _getData(context,viewModel);
         },
         child: Text("Login",
             textAlign: TextAlign.center,
@@ -121,7 +149,7 @@ class _LoginView extends State<LoginView> {
                 color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
-    
+}
     final registrationText = InkWell(
         child: Text(
           "Do not have an Account ? SignUp ?",
@@ -133,79 +161,71 @@ class _LoginView extends State<LoginView> {
                 builder: (BuildContext context) => RegistrationScreen(),
               ));
         });
-return new StoreConnector<AppState, _ViewModel>(
+
+    return new StoreConnector<AppState, _ViewModel>(
         converter: (store) => _ViewModel.fromStore(store),
         builder: (BuildContext context, _ViewModel viewModel) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Center(
-          child: Container(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(36.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    height: 55.0,
-                    child: Image.asset(
-                      "assets/flutter.png",
-                      fit: BoxFit.contain,
+          return Scaffold(
+            body: SingleChildScrollView(
+              child: Center(
+                child: Container(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(36.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          height: 55.0,
+                          child: Image.asset(
+                            "assets/flutter.png",
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                        SizedBox(height: 25.0),
+                        loginText,
+                        SizedBox(height: 5.0),
+                        errorText,
+                        SizedBox(height: 45.0),
+                        emailField,
+                        SizedBox(height: 25.0),
+                        passwordField,
+                        SizedBox(height: 35.0,),
+                        loginButton(viewModel),
+                        SizedBox(height: 35.0, ),
+                        GoogleSigninButton(),
+                        SizedBox(height: 35.0,),
+                        FacebookSigninButton(),
+                        SizedBox(height: 15.0,),
+                        registrationText
+                      ],
                     ),
                   ),
-                  SizedBox(height: 25.0),
-                  loginText,
-                  SizedBox(height: 5.0),
-                  errorText,
-                  SizedBox(height: 45.0),
-                  emailField,
-                  SizedBox(height: 25.0),
-                  passwordField,
-                  SizedBox(
-                    height: 35.0,
-                  ),
-                  loginButon,
-                  SizedBox(
-                    height: 35.0,
-                  ),
-                  GoogleSigninButton(),
-                  SizedBox(
-                    height: 35.0,
-                  ),
-                  FacebookSigninButton(),
-                  SizedBox(
-                    height: 15.0,
-                  ),
-                  registrationText
-                ],
+                ),
               ),
             ),
-          ),
-        ),
-      ),
-    );
-        }
-);
+          );
+        });
   }
 }
-
 class _ViewModel {
-  final Function login;
+  final Function loginSuccessfull;
   final UserDataState userdata;
 
   _ViewModel({
-    this.login,
-     @required this.userdata,
+    this.loginSuccessfull,
+    @required this.userdata,
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
-    return _ViewModel(login: () {
-      store.dispatch(Login(isLoading: true));
-      },
-      userdata: userDataStateSelector(store.state));
-   }
+    return _ViewModel(
+        loginSuccessfull:(email) {
+          store.dispatch(LoginSuccessfull(email:email));
+        },
+        userdata: userDataStateSelector(store.state));
   }
+}
 
 TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 OutlineInputBorder borderStyle =

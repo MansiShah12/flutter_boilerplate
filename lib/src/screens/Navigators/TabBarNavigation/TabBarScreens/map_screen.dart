@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../Maps/maps.dart';
+import '../../../MapScreen/maps.dart';
 class Map extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

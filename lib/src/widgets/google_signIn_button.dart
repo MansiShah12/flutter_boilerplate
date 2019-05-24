@@ -14,7 +14,6 @@ class GoogleSigninButton extends StatefulWidget {
 
 class _GoogleSigninButton extends State<GoogleSigninButton> {
   onPressCalled(context, viewModel) {
-    String email = viewModel.userdata.data;
     viewModel.login(context, 'google');
   }
 

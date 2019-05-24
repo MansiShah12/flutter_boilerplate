@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_boilerplate/src/services/firebase_config.dart';
 import 'dart:io';
-import '../../utility/ validation.dart';
+import '../../utility/validation.dart';
 import '../Navigators/BottomTabNavigation/index.dart';
 import '../LoginScreen/login_screen.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,13 +15,12 @@ class RegistrationScreen extends StatelessWidget {
     );
   }
 }
-
 class Registration extends StatefulWidget {
   @override
   _Registration createState() => _Registration();
 }
-
 class _Registration extends State<Registration> {
+  final firebaseReference = FirebaseReference().databaseReference;
   File _image;
   String fname = '',
       lname = '',
@@ -51,6 +51,7 @@ class _Registration extends State<Registration> {
         error = '';
       });
       if (Validation.emailValidation(email)) {
+        createRecord();
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -81,6 +82,12 @@ class _Registration extends State<Registration> {
     }
   }
 
+  void createRecord() {
+     firebaseReference.push().set({'Name':'$fname $lname', 'Email': email, 'Password': password});
+    //  .then((data)=>{print("url isisisiss $data")});
+    
+  }
+
   Future getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
     setState(() {
@@ -88,7 +95,13 @@ class _Registration extends State<Registration> {
     });
   }
 
-  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  inputDecoration(hintText) {
+    return InputDecoration(
+        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        hintText: hintText,
+        border: borderStyle);
+  }
+
   Widget build(BuildContext context) {
     final registrationText = Text('Registration',
         textAlign: TextAlign.center,
@@ -118,77 +131,69 @@ class _Registration extends State<Registration> {
               ));
 
     final firstName = TextField(
-      controller: firstNameController,
-      obscureText: false,
-      style: style,
-      onChanged: (text) {
-        setState(() {
-          fname = text;
-        });
-      },
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: " First Name",
-          border: borderStyle),
-    );
+        controller: firstNameController,
+        obscureText: false,
+        style: style,
+        onChanged: (text) {
+          setState(() {
+            fname = text;
+          });
+        },
+        decoration: inputDecoration("First Name"));
 
     final lastName = TextField(
-      controller: lastNameController,
-      obscureText: false,
-      style: style,
-      onChanged: (text) {
-        setState(() {
-          lname = text;
-        });
-      },
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Last Name",
-          border: borderStyle),
-    );
+        controller: lastNameController,
+        obscureText: false,
+        style: style,
+        onChanged: (text) {
+          setState(() {
+            lname = text;
+          });
+        },
+        decoration: inputDecoration("Last Name"));
 
     final emailField = TextField(
-      controller: myController,
-      obscureText: false,
-      style: style,
-      onChanged: (text) {
-        setState(() {
-          email = text;
-        });
-      },
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Email",
-          border: borderStyle),
-    );
+        controller: myController,
+        obscureText: false,
+        style: style,
+        onChanged: (text) {
+          setState(() {
+            email = text;
+          });
+        },
+        decoration: inputDecoration("Email"));
 
     final passwordField = TextField(
-      obscureText: true,
-      style: style,
-      onChanged: (text) {
-        setState(() {
-          password = text;
-        });
-      },
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Password",
-          border: borderStyle),
-    );
+        obscureText: true,
+        style: style,
+        onChanged: (text) {
+          setState(() {
+            password = text;
+          });
+        },
+        decoration: inputDecoration("Password"));
 
     final confirmPassword = TextField(
-      obscureText: true,
-      style: style,
-      onChanged: (text) {
-        setState(() {
-          cpassword = text;
+        obscureText: true,
+        style: style,
+        onChanged: (text) {
+          setState(() {
+            cpassword = text;
+          });
+        },
+        decoration: inputDecoration("Confirm Password"));
+
+    final loginText = InkWell(
+        child: Text(
+          "Already an Account ? Login ?",
+        ),
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => BottomTab(),
+              ));
         });
-      },
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Confirm Password",
-          border: borderStyle),
-    );
 
     final registartionButton = Material(
       elevation: 5.0,
@@ -206,17 +211,6 @@ class _Registration extends State<Registration> {
                 color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
-    final loginText = InkWell(
-        child: Text(
-          "Already an Account ? Login ?",
-        ),
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => BottomTab(),
-              ));
-          });
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -244,9 +238,7 @@ class _Registration extends State<Registration> {
                   passwordField,
                   SizedBox(height: 20.0),
                   confirmPassword,
-                  SizedBox(
-                    height: 35.0,
-                  ),
+                  SizedBox(height: 35.0),
                   registartionButton,
                   SizedBox(height: 15.0),
                   loginText,
