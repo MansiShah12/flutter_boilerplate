@@ -5,18 +5,26 @@ import 'package:redux/redux.dart';
 
 Reducer<UserDataState> ownerDetailsReducer = combineReducers([
   TypedReducer<UserDataState, LoginSuccessfull>(_loadOwnerDetails),
+  TypedReducer<UserDataState, LogOutSuccessfull>(_logOutUser),
   TypedReducer<UserDataState, UserLoading>(_userLoading),
-  TypedReducer<UserDataState, LogOutUser>(_logOutUser),
 ]);
 
 UserDataState _loadOwnerDetails(UserDataState state, LoginSuccessfull action) {
-  print("action.emailaction.emailaction.email, ${action.email}");
   return state.copyWith(
     isLoading: false,
     data: action.email,
-    error: null,
-  );
+    signInMethod: action.signInMethod,
+    loggedIn:true
+    );
 }
+UserDataState _logOutUser(UserDataState state, LogOutSuccessfull action) {
+  return state.copyWith(
+    data: action.email,
+    signInMethod: action.signInMethod,
+    loggedIn:false
+    );
+}
+
 
 UserDataState _userLoading(UserDataState state, UserLoading action) {
   return state.copyWith(
@@ -24,9 +32,4 @@ UserDataState _userLoading(UserDataState state, UserLoading action) {
    );
 }
 
-UserDataState _logOutUser(UserDataState state, LogOutUser action) {
-  return state.copyWith(
-    data:'',
-    loggedIn:action.loggedIn
-   );
-}
+

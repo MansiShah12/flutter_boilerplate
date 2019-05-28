@@ -1,31 +1,107 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_boilerplate/src/actions/actions.dart';
 import 'package:flutter_boilerplate/src/models/app_state.dart';
 import 'package:flutter_boilerplate/src/models/user_data_state.dart';
 import 'package:flutter_boilerplate/src/screens/LoginScreen/login_screen.dart';
 import 'package:flutter_boilerplate/src/selectors/selectors.dart';
+import 'package:flutter_boilerplate/src/services/firebase_config.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 class DrawerBar extends StatelessWidget {
-  _onDrawerTileTap(context, title,viewModel ) async{
+  final firebaseReference = FirebaseReference().databaseReference;
+
+  onDeleteAccountPressed(context, viewModel) async {
+    String email = viewModel.userdata.data;
+    var db = firebaseReference.child("Users");
+    await db.once().then((DataSnapshot snapshot) {
+      Map<dynamic, dynamic> values = snapshot.value;
+      values.forEach((key, values) {
+        if (values["email"] == email) {
+          print("valuesvalue $viewModel");
+          firebaseReference
+              .reference()
+              .child("Users")
+              .child("$key")
+              .remove()
+              .then((_) {
+            print("Delete successful");
+          });
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: new Text(" Account Successfully deleted"),
+                actions: <Widget>[
+                  new FlatButton(
+                    child: new Text("Ok"),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => LoginScreen(),
+                          ));
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+         }
+      });
+    });
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => LoginScreen(),
+        ));
+  }
+
+  _onDrawerTileTap(context, title, viewModel) async {
     if (title == "Logout") {
-      await viewModel.logout();
+      String signInMethod = viewModel.userdata.signInMethod;
+      viewModel.logout(signInMethod);
       Navigator.push(
           context,
           MaterialPageRoute(
             builder: (BuildContext context) => LoginScreen(),
           ));
+    } else if (title == "Delete Account") {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text(
+                "Do you really want to delete Account from this App ?"),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text("yes"),
+                onPressed: () {
+                  onDeleteAccountPressed(context, viewModel);
+                },
+              ),
+              new FlatButton(
+                child: new Text("No"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        },
+      );
     } else
       Navigator.pop(context);
   }
 
-  _drawerList(context, title, icon,viewModel) {
+  _drawerList(context, title, icon, viewModel) {
     return ListTile(
         leading: Icon(icon),
         title: Text(title),
         onTap: () {
-          _onDrawerTileTap(context, title,viewModel);
+          _onDrawerTileTap(context, title, viewModel);
         });
   }
 
@@ -50,11 +126,14 @@ class DrawerBar extends StatelessWidget {
                     ),
                     decoration: BoxDecoration(color: Colors.blueAccent),
                   ),
-                  _drawerList(context, 'My Profile', Icons.account_circle,viewModel),
-                  _drawerList(context, 'Images', Icons.image,viewModel),
-                  _drawerList(context, 'Map', Icons.map,viewModel),
-                  _drawerList(context, 'Settings', Icons.settings,viewModel),
+                  _drawerList(
+                      context, 'My Profile', Icons.account_circle, viewModel),
+                  _drawerList(context, 'Images', Icons.image, viewModel),
+                  _drawerList(context, 'Map', Icons.map, viewModel),
+                  _drawerList(context, 'Settings', Icons.settings, viewModel),
                   _drawerList(context, 'Logout', Icons.arrow_back, viewModel),
+                  _drawerList(
+                      context, 'Delete Account', Icons.delete, viewModel),
                 ],
               ));
         });
@@ -72,10 +151,10 @@ class _ViewModel {
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-        logout: () {
-          store.dispatch(LogOutUser(email: '', loggedIn: false));
+        logout: (signInMethod) {
+          store.dispatch(LogOutUser(
+              email: '', loggedIn: false, signInMethod: signInMethod));
         },
-         userdata: userDataStateSelector(store.state)
-        );
+        userdata: userDataStateSelector(store.state));
   }
 }

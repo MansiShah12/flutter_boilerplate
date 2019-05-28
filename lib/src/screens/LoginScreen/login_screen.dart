@@ -39,7 +39,8 @@ class _LoginView extends State<LoginView> {
     await db.once().then((DataSnapshot snapshot) {
       Map<dynamic, dynamic> values = snapshot.value;
       values.forEach((key, values) {
-        if (values["Email"] == email && values["Password"] == password) {
+        print("valuesssssss $values, $key");
+        if (values["email"] == email && values["password"] == password) {
           flag = 1;
           print("valuesvalue $viewModel");
          viewModel.loginSuccessfull(values["Email"]) ;
