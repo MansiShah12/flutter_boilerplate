@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
-import 'package:flutter_boilerplate/src/actions/actions.dart';
+import 'package:flutter_boilerplate/src/actions/user_action.dart';
 import 'package:flutter_boilerplate/src/models/app_state.dart';
 import 'package:flutter_boilerplate/src/models/user_data_state.dart';
 import 'package:flutter_boilerplate/src/selectors/selectors.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/src/actions/actions.dart';
+import 'package:flutter_boilerplate/src/actions/user_action.dart';
 import 'package:flutter_boilerplate/src/models/app_state.dart';
 import 'package:flutter_boilerplate/src/models/user_data_state.dart';
 import 'package:flutter_boilerplate/src/selectors/selectors.dart';
@@ -36,8 +36,7 @@ class _ViewModel {
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(login: (context,signInMethod) {
-      print("in Loginnnnn $signInMethod");
-        store.dispatch(Login(isLoading: true, context:context,signInMethod:signInMethod));
+      store.dispatch(Login(isLoading: true, context:context,signInMethod:signInMethod));
       },
       userdata: userDataStateSelector(store.state));
    }

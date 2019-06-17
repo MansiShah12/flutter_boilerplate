@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/src/screens/Navigators/BottomTabNavigation/index.dart';
+
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:path/path.dart';
 import 'dart:convert';
 import 'package:sentry/sentry.dart';
 
@@ -35,8 +32,7 @@ class GoogleSigning {
       print("credentialcredentialcredential: $credential");
 
       final FirebaseUser user = await _fAuth.signInWithCredential(credential);
-      print("useruseruseruseruser: $user");
-
+      
       assert(user.email != null);
       assert(user.displayName != null);
       assert(!user.isAnonymous);

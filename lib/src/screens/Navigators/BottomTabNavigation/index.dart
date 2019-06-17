@@ -17,9 +17,9 @@ class _BottomTab extends State<BottomTab> {
   int _currentIndex = 0;
   final List<Widget> _bottomTabScreens = [
     TabBarScreen(),
-    BrowseScreen(Colors.lime),
-    SettingScreen(Colors.deepOrange),
-    ProfileScreen(Colors.blue),
+    BrowseScreen(fromTab: true),
+    SettingScreen(fromTab: true),
+    ProfileScreen(fromTab: true),
   ];
 
   void onTabTapped(int index) {

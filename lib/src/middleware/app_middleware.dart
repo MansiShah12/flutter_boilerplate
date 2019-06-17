@@ -8,7 +8,7 @@ import 'package:flutter_boilerplate/src/screens/Navigators/BottomTabNavigation/i
 import 'package:flutter_boilerplate/src/services/beerService.dart';
 import 'package:flutter_boilerplate/src/services/facebookSignIn.dart';
 import 'package:flutter_boilerplate/src/services/firebase_config.dart';
-import '../actions/actions.dart';
+import '../actions/user_action.dart';
 import '../models/app_state.dart';
 import '../services/googleSignIn.dart';
 
@@ -82,7 +82,6 @@ class AppMiddleware {
     store.dispatch(UserLoading(isLoading: true));
     bool loggedIn;
     String signInMethod = action.signInMethod;
-    print("in middleware ${action.signInMethod}");
     if (signInMethod == 'google') {
       loggedIn = await GoogleSigning.signOut();
     } else if (signInMethod == 'facebook') {

@@ -1,5 +1,6 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/src/actions/actions.dart';
+import 'package:flutter_boilerplate/src/actions/user_action.dart';
 import 'package:flutter_boilerplate/src/models/app_state.dart';
 import 'package:flutter_boilerplate/src/models/user_data_state.dart';
 import 'package:flutter_boilerplate/src/selectors/selectors.dart';
@@ -10,6 +11,7 @@ import 'dart:io';
 import '../../utility/validation.dart';
 import '../Navigators/BottomTabNavigation/index.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class RegistrationScreen extends StatelessWidget {
   @override
@@ -40,7 +42,7 @@ class _Registration extends State<Registration> {
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
 
-  void _getData(context, viewModel) {
+  void _getData(context, viewModel) async {
     if (fname == '' ||
         lname == '' ||
         email == '' ||
@@ -58,6 +60,11 @@ class _Registration extends State<Registration> {
         error = '';
       });
       if (Validation.emailValidation(email)) {
+        print("in Email validationnnnnn");
+        bool userExists = false;
+         userExists = await checkUser();
+        print("userExistsuserExists $userExists");
+        if(!userExists)
         createRecord(context, viewModel);
       } else {
         setState(() {
@@ -67,37 +74,49 @@ class _Registration extends State<Registration> {
     }
   }
 
-  void createRecord(context, viewModel) {
+   checkUser()async{
+    bool userExist;
+    print("in checkUser");
+     var db = firebaseReference.child("Users");
+    await db.once().then((DataSnapshot snapshot) {
+      Map<dynamic, dynamic> values = snapshot.value;
+      print("values ===== $values");
+      if(values != null)
+      {values.forEach((key, values) {
+        print("valuesssssss $values, $key");
+        if (values["email"] == email) {
+          setState(() {
+            error = 'Email already Exists';
+          });
+          userExist= true ;
+        }
+        else{
+          userExist= false;
+        }
+      });}
+      else{
+          userExist= false;
+        }
+    });
+    return userExist;
+  }
+
+  void createRecord(context, viewModel) async{
     var time = new DateTime.now().millisecondsSinceEpoch;
+    
     firebaseReference.child("Users").child('$time').set({
       'name': '$fname $lname',
       'email': email,
       'password': password
     }).then((data) {
+      Fluttertoast.showToast(msg: "Successfully Registered ",backgroundColor: Colors.grey,);
       viewModel.loginSuccessfull(email, 'login');
-      Navigator.push(
+     Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (BuildContext context) => BottomTab(),
           ));
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: new Text("Successfully Registered"),
-            content: new Text("$email"),
-            actions: <Widget>[
-              new FlatButton(
-                child: new Text("Ok"),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          );
-        },
-      );
-    });
+     });
   }
 
   Future getImage() async {
@@ -115,6 +134,7 @@ class _Registration extends State<Registration> {
   }
 
   Widget build(BuildContext context) {
+
     final registrationText = Text('Registration',
         textAlign: TextAlign.center,
         style: TextStyle(
@@ -207,7 +227,7 @@ class _Registration extends State<Registration> {
               ));
         });
 
-    registartionButton(viewModel) {
+    registartionButton(viewModel,context) {
       return Material(
         elevation: 5.0,
         borderRadius: BorderRadius.circular(30.0),
@@ -256,7 +276,7 @@ class _Registration extends State<Registration> {
                         SizedBox(height: 20.0),
                         confirmPassword,
                         SizedBox(height: 35.0),
-                        registartionButton(viewModel),
+                        registartionButton(viewModel,context),
                         SizedBox(height: 15.0),
                         loginText,
                       ],

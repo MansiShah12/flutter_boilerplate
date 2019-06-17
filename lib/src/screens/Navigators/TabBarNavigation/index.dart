@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/src/screens/Navigators/TabBarNavigation/TabBarScreens/user_screen.dart';
-
 import './TabBarScreens/home_screen.dart';
 import './TabBarScreens/map_screen.dart';
 import '../../ImageSwiper/image_swiper.dart';
@@ -11,7 +9,7 @@ class TabBarScreen extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: DefaultTabController(
-        length: 4,
+        length: 3,
         child: Scaffold(
           appBar: AppBar(
             flexibleSpace: SafeArea(
@@ -20,18 +18,16 @@ class TabBarScreen extends StatelessWidget {
                   Tab(icon: Icon(Icons.local_bar)),
                   Tab(icon: Icon(Icons.map)),
                   Tab(icon: Icon(Icons.image)),
-                  Tab(icon: Icon(Icons.account_circle)),
-                ],
+                  ],
               ),
             ),
           ),
           body: TabBarView(
             children: [
               First(),
-              Map(),
-              ImageSwiper(),
-              OwnerDetails(),
-            ],
+              Map(fromTab: true),
+              ImageSwiper(fromTab: true),
+              ],
           ),
         ),
       ),

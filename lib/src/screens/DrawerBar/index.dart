@@ -1,9 +1,14 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/src/actions/actions.dart';
+import 'package:flutter_boilerplate/src/actions/user_action.dart';
 import 'package:flutter_boilerplate/src/models/app_state.dart';
 import 'package:flutter_boilerplate/src/models/user_data_state.dart';
+import 'package:flutter_boilerplate/src/screens/ImageSwiper/image_swiper.dart';
+import 'package:flutter_boilerplate/src/screens/InAppPurchase/index.dart';
 import 'package:flutter_boilerplate/src/screens/LoginScreen/login_screen.dart';
+import 'package:flutter_boilerplate/src/screens/MapScreen/maps.dart';
+import 'package:flutter_boilerplate/src/screens/Navigators/BottomTabNavigation/BottomTabScreens/setting_screen.dart';
+import 'package:flutter_boilerplate/src/screens/Navigators/TabBarNavigation/TabBarScreens/user_screen.dart';
 import 'package:flutter_boilerplate/src/selectors/selectors.dart';
 import 'package:flutter_boilerplate/src/services/firebase_config.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -60,15 +65,62 @@ class DrawerBar extends StatelessWidget {
   }
 
   _onDrawerTileTap(context, title, viewModel) async {
-    if (title == "Logout") {
-      String signInMethod = viewModel.userdata.signInMethod;
+    switch(title) { 
+   case 'Logout': { 
+       String signInMethod = viewModel.userdata.signInMethod;
       viewModel.logout(signInMethod);
       Navigator.push(
           context,
           MaterialPageRoute(
             builder: (BuildContext context) => LoginScreen(),
-          ));
-    } else if (title == "Delete Account") {
+          )); 
+   } 
+   break; 
+  
+   case 'Map': { 
+     Navigator.pop(context); 
+     Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => Maps(fromTab: false),
+              ));
+   } 
+   break;
+   case 'Images': { 
+     Navigator.pop(context); 
+      Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => ImageSwiper(fromTab: false),
+              ));
+              
+   }
+   break;
+   case 'Settings': { 
+      Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => SettingScreen(fromTab: false),
+              ));
+   }
+   break;
+   case 'In-App Purchase': { 
+      Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) =>InAppPurchase() ,
+              )); 
+   }
+   break;
+   case 'My Profile': { 
+      Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => UserDetails(),
+              )); 
+   }
+   break; 
+   case 'Delete Account': { 
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -92,9 +144,15 @@ class DrawerBar extends StatelessWidget {
           );
         },
       );
-    } else
+   }
+   break;
+      
+   default: { 
       Navigator.pop(context);
-  }
+   }
+   break; 
+}
+}
 
   _drawerList(context, title, icon, viewModel) {
     return ListTile(
@@ -133,7 +191,10 @@ class DrawerBar extends StatelessWidget {
                   _drawerList(context, 'Settings', Icons.settings, viewModel),
                   _drawerList(context, 'Logout', Icons.arrow_back, viewModel),
                   _drawerList(
+                      context, 'In-App Purchase', Icons.shopping_basket, viewModel),
+                      _drawerList(
                       context, 'Delete Account', Icons.delete, viewModel),
+
                 ],
               ));
         });

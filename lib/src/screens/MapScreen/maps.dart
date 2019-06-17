@@ -5,14 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-void main() => runApp(Maps());
-
+@immutable
 class Maps extends StatefulWidget {
+  final bool fromTab;
+const Maps( {Key key, this.fromTab}): super(key: key);
+
   @override
-  _MapsState createState() => _MapsState();
+  _MapsState createState() => _MapsState(fromTab);
 }
 
 class _MapsState extends State<Maps> {
+  bool fromTab;
+_MapsState(fromTabView){
+  fromTab = fromTabView;
+}
   Completer<GoogleMapController> _controller = Completer();
 
   static const LatLng _center = const LatLng(20.5937, 78.9629);
@@ -76,11 +82,24 @@ class _MapsState extends State<Maps> {
 void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
   }
-
+appBar(fromTab,context){
+   if(!fromTab){
+   return AppBar(
+                title: Text("Map"),
+                automaticallyImplyLeading: true,
+                leading: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () => Navigator.pop(context, false),
+                ));
+                }else{
+                  return null;
+                }
+ }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        appBar:appBar(fromTab,context),
         body: Stack(
           children: <Widget>[
             GoogleMap(

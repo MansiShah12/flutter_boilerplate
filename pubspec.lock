@@ -42,7 +42,7 @@ packages:
       name: firebase_auth
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.11.1"
+    version: "0.11.1+5"
   firebase_core:
     dependency: transitive
     description:
@@ -57,6 +57,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0"
+  firebase_messaging:
+    dependency: "direct main"
+    description:
+      name: firebase_messaging
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.2"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -72,10 +79,19 @@ packages:
   flutter_facebook_login:
     dependency: "direct main"
     description:
-      name: flutter_facebook_login
+      path: "."
+      ref: e69fef3
+      resolved-ref: e69fef34c994938cce9d716b64e05e4d212dc858
+      url: "https://github.com/roughike/flutter_facebook_login"
+    source: git
+    version: "1.2.0"
+  flutter_inapp_purchase:
+    dependency: "direct main"
+    description:
+      name: flutter_inapp_purchase
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0"
+    version: "0.9.2"
   flutter_page_indicator:
     dependency: transitive
     description:
@@ -102,6 +118,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  fluttertoast:
+    dependency: "direct main"
+    description:
+      name: fluttertoast
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.11"
   google_maps_flutter:
     dependency: "direct main"
     description:
@@ -179,6 +202,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.5.0"
+  platform:
+    dependency: transitive
+    description:
+      name: platform
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.0"
   quiver:
     dependency: transitive
     description:
@@ -289,6 +319,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.6"
+  transparent_image:
+    dependency: "direct main"
+    description:
+      name: transparent_image
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   typed_data:
     dependency: transitive
     description:
@@ -312,4 +349,4 @@ packages:
     version: "2.0.8"
 sdks:
   dart: ">=2.2.2 <3.0.0"
-  flutter: ">=0.11.9 <2.0.0"
+  flutter: ">=1.5.0 <2.0.0"

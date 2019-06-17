@@ -5,8 +5,16 @@ import 'package:flutter_boilerplate/src/selectors/selectors.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-class OwnerDetails extends StatelessWidget {
-  OwnerDetails({Key key}) : super(key: key);
+class UserDetails extends StatelessWidget {
+  UserDetails({Key key}) : super(key: key);
+  mainView(context, viewModel) {
+    return SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        child: _createColumn(context, viewModel),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +22,17 @@ class OwnerDetails extends StatelessWidget {
       distinct: true,
       converter: (store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel viewModel) {
-        
-        return SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            child: _createColumn(context, viewModel),
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Scaffold(
+            appBar: AppBar(
+                title: Text("My Profile"),
+                automaticallyImplyLeading: true,
+                leading: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () => Navigator.pop(context, false),
+                )),
+            body: mainView(context, viewModel),
           ),
         );
       },
@@ -31,10 +45,16 @@ class OwnerDetails extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text("Hello, $data",
-        textAlign: TextAlign.center,
-            style:TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20,)),
+        Padding(
+          padding: EdgeInsets.fromLTRB(50.0, 50.0, 50.0, 50.0),
+          child: Text("Hello, $data",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              )),
+        )
       ],
     );
   }

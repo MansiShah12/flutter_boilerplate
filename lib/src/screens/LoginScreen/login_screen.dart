@@ -1,8 +1,9 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/src/actions/actions.dart';
+import 'package:flutter_boilerplate/src/actions/user_action.dart';
 import 'package:flutter_boilerplate/src/models/app_state.dart';
 import 'package:flutter_boilerplate/src/models/user_data_state.dart';
+import 'package:flutter_boilerplate/src/screens/InAppPurchase/index.dart';
 import 'package:flutter_boilerplate/src/selectors/selectors.dart';
 import 'package:flutter_boilerplate/src/services/firebase_config.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -42,26 +43,8 @@ class _LoginView extends State<LoginView> {
         print("valuesssssss $values, $key");
         if (values["email"] == email && values["password"] == password) {
           flag = 1;
-          print("valuesvalue $viewModel");
-         viewModel.loginSuccessfull(values["Email"]) ;
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: new Text("Successfully LoggedIn with"),
-                content: new Text("$email"),
-                actions: <Widget>[
-                  new FlatButton(
-                    child: new Text("Ok"),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              );
-            },
-          );
-          Navigator.push(
+          viewModel.loginSuccessfull(values["email"]) ;
+          Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (BuildContext context) => BottomTab(),
@@ -75,6 +58,8 @@ class _LoginView extends State<LoginView> {
       });
     }
   }
+  
+
 
   void _getData(context,viewModel) {
     if (email == '' || password == '') {
@@ -222,6 +207,7 @@ class _ViewModel {
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
         loginSuccessfull:(email) {
+          print("Email in screen is $email");
           store.dispatch(LoginSuccessfull(email:email));
         },
         userdata: userDataStateSelector(store.state));

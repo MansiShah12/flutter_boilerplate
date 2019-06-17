@@ -11,8 +11,7 @@ final String url = '$BASE_URL$params';
  final streamedRest = await client.send(
    http.Request(method, Uri.parse(url))
  );
-print("streamedReststreamedRestttttt: $streamedRest");
- return streamedRest.stream
+return streamedRest.stream
      .transform(utf8.decoder)
      .transform(json.decoder)
      .expand((data) => (data as List))

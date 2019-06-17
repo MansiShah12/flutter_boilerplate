@@ -21,7 +21,6 @@ class ReduxApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("store+++++ ${store.toString()}");
     return StoreProvider<AppState>(
       store: store,
       child: MaterialApp(
@@ -31,7 +30,10 @@ class ReduxApp extends StatelessWidget {
         ),
         routes: <String, WidgetBuilder>{
           '/': (BuildContext context) {
-            return LoginScreen();
+            return Scaffold(
+              backgroundColor: Colors.grey,
+              body:LoginScreen()); 
+            
           }
         }
       ),
